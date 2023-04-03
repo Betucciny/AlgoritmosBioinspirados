@@ -1,0 +1,94 @@
+clear all
+% Numero de individuos
+Nind = 40;
+% Numero de variables
+Nvar = 10;
+% Arreglo de tamaño Nvar con los limites inferiores correspondientes
+Li = ones(1, Nvar)* -10;
+% Arreglo de tamaño Nvar con los limites superiores correspondientes
+Ls = ones(1, Nvar)* 10;
+% Numero de generaciones del genetico
+Ngen = 200;
+% Inercia
+W = 0.5;
+% Cognitivo
+c1 = 1;
+% Social
+c2 = 1;
+
+rng('shuffle');
+colFo = Nvar + 1;
+
+pob = crearPob(Li, Ls, Nind, Nvar)
+vel = zeros(size(pob));
+FO = zeros([Nind 1])
+for i = 1:Nind
+    FO(i) = funcionObjetivo(pob(1,:));
+end
+pbest = pob;
+pbestFO = FO;
+
+temp = [pob, FO];
+sortrows(temp, colFo);
+gbest = temp(1,1:Nvar);
+gbestFO = temp(1,colFo);
+
+archivo = fopen("dif(1).txt", "w");
+
+
+
+for p = 1:Ngen
+    newvel = zeros(size(vel));
+    newpob = zeros(size(pob));
+    newFO = zeros(size(FO));
+
+    for i= 1:Nind
+        for var = 1:Nvar
+            newvel(i, var) = W*vel(i, var) + c1*rand()*(pbest(i,var) - ...
+                pob(i,var)) + c2*rand()*(gbest(1,var) - pob(i,var));
+            newpob(i, var) = ajustar(pob(i,var) + newvel(i, var), ...
+                Li(var), Ls(var));
+        end
+        newFO(i) = funcionObjetivo(newpob(i,:));
+
+        if newFO(i) < pbestFO(i)
+            pbest(i,:) = newpob(i,:);
+            pbestFO(i) = newFO(i);
+        end
+
+        if newFO(i) < gbestFO
+            gbest(1,:) = newpob(i,:);
+            gbestFO = newFO(i);
+        end
+    end
+    FO = newFO;
+    vel = newvel;
+    pob = newpob;
+end
+    
+
+function FO = funcionObjetivo(reales)
+    FO = sum(reales.^2, 2);
+end
+
+function pob = crearPob(li, ls, Nind, Nvar)
+    pob = zeros(Nind, Nvar);
+    for i=1:Nvar
+        pob(:,i) = li(i) + (ls(i)- li(i))*rand(Nind, 1);
+    end
+end
+
+function ajustado = ajustar(valor, li, ls)
+    while true
+        if valor < li
+            valor = 2*li - valor;
+        elseif valor > ls
+            valor = 2*ls - valor;
+        else
+            break
+        end
+    end
+    ajustado = valor;
+end
+
+
