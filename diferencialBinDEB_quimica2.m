@@ -8,7 +8,7 @@ Li = [0 0 0 0 0.00001 0.00001];
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
 Ls = [1 1 1 1 16 16];
 %Numero de generaciones del genetico
-Ngen = 300000;
+Ngen = 15000;
 %Factor de cruza
 Fc = 0.7;
 % Fc = 0.6 + (0.3)*rand();

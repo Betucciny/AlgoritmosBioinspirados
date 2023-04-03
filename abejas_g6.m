@@ -3,15 +3,16 @@ format longG
 % Numero de fuentes
 Nf = 100;
 % Numero de variables
-Nvar = 8;
+Nvar = 2;
 % Arreglo de tamaño Nvar con los limites inferiores correspondientes
-Li = [100 1000 1000 10 10 10 10 10];
+Li = [13 0];
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
-Ls = [10000 10000 10000 1000 1000 1000 1000 1000];
+Ls = [100 100];
 %Numero de iteraciones del genetico
-Niter = 30000;
+Niter = 1000000;
 
-limite = round(Niter / (2*Nf));
+% limite = round(Niter / (2*Nf));
+limite = round(Niter / Nf);
 
 rng('shuffle');
 fuentes = crearPob(Li, Ls, Nf, Nvar);
@@ -106,21 +107,17 @@ for p=1:Niter
 end
 
 function FO = funcionObjetivo(p)
-    FO = p(1) + p(2) + p(3);
+    FO = (p(1)-10).^3 + (p(2)-20).^3;
 end
 
 function g = restdes(p)
-    g = zeros(1,3);
-    g(1) = 100*p(1) - p(1)*p(6) + 833.33252*p(4) - 83333.333;
-    g(2) = p(2)*p(4) - p(2)*p(7) - 1250*p(4) + 1250*p(5);
-    g(3) = p(3)*p(5) - p(3)*p(8) - 2500*p(5) + 1250000;
+    g = zeros(1,2);
+    g(1) = -(p(1)-5).^2 - (p(2)-5).^2 + 100;
+    g(2) = (p(1)-6).^2 + (p(2)-5).^2 - 82.81;
 end
 
 function h = restigu(p)
-    h = zeros(1,3);
-    h(1) = 0.0025*(p(4) + p(6)) - 1;
-    h(2) = 0.0025*(-p(4) + p(5) + p(7)) - 1;
-    h(3) =  0.01*(-p(5) + p(8)) - 1; 
+    h = 0; 
 end
 
 function s = SVR(g, h)

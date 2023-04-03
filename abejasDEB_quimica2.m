@@ -3,11 +3,11 @@ format longG
 % Numero de fuentes
 Nf = 100;
 % Numero de variables
-Nvar = 8;
+Nvar = 6;
 % Arreglo de tamaño Nvar con los limites inferiores correspondientes
-Li = [100 1000 1000 10 10 10 10 10];
+Li = [0 0 0 0 0.00001 0.00001];
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
-Ls = [10000 10000 10000 1000 1000 1000 1000 1000];
+Ls = [1 1 1 1 16 16];
 %Numero de iteraciones del genetico
 Niter = 30000;
 
@@ -106,21 +106,24 @@ for p=1:Niter
 end
 
 function FO = funcionObjetivo(p)
-    FO = p(1) + p(2) + p(3);
+    FO = -p(4);
 end
 
 function g = restdes(p)
-    g = zeros(1,3);
-    g(1) = 100*p(1) - p(1)*p(6) + 833.33252*p(4) - 83333.333;
-    g(2) = p(2)*p(4) - p(2)*p(7) - 1250*p(4) + 1250*p(5);
-    g(3) = p(3)*p(5) - p(3)*p(8) - 2500*p(5) + 1250000;
+    g = zeros(1,1);
+    g(1) = p(5).^0.5 + p(6).^0.5 - 4;
 end
 
 function h = restigu(p)
-    h = zeros(1,3);
-    h(1) = 0.0025*(p(4) + p(6)) - 1;
-    h(2) = 0.0025*(-p(4) + p(5) + p(7)) - 1;
-    h(3) =  0.01*(-p(5) + p(8)) - 1; 
+    k1 = 0.09755988;
+    k2 = 0.99*k1;
+    k3 = 0.0391908;
+    k4 = 0.9*k3;
+    h = zeros(1,4);
+    h(1) = p(1) + k1*p(2)*p(5) - 1;
+    h(2) = p(2) - p(1) + k2*p(2)*p(6);
+    h(3) = p(3) + p(1) + k3*p(3)*p(5) - 1; 
+    h(4) = p(4) - p(3) + p(2) - p(1) + k4*p(4)*p(6);
 end
 
 function s = SVR(g, h)
