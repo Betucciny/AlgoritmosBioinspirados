@@ -39,7 +39,8 @@ for g = 1:g_max
         if rand() < rac
             index = randi(NH);
             if rand() < rpa
-                newH(v) = harmonies(index, v) + bw(v) * (-1 + 2*rand());
+                newH(v) = ajustar(harmonies(index, v) + bw(v) * ...
+                    (-1 + 2*rand()), Li(v), Ls(v));
             else
                 if rand() < ria
                     newH(v) = harmonies(bindex, v);
