@@ -1,6 +1,6 @@
 clear all
 % Ireaciones
-g_max = 100000;
+g_max = 10000;
 % Harmony numbers
 NH = 20;
 % Variable numbers
