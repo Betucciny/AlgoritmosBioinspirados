@@ -1,7 +1,7 @@
 clear all
 format longG
 % Numero de fuentes
-Nf = 50;
+Nf = 20;
 % Numero de variables
 Nvar = 3;
 % Arreglo de tamaño Nvar con los limites inferiores correspondientes
@@ -9,7 +9,7 @@ Li = ones(1, Nvar)* -10;
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
 Ls = ones(1, Nvar)* 10; 
 %Numero de iteraciones
-Niter = 10000;
+Niter = 5000;
 %Limite de explotacion de fuente
 limite = round(Niter / (2*Nf));
 

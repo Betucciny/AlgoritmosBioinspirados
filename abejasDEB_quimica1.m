@@ -9,7 +9,7 @@ Li = [100 1000 1000 10 10 10 10 10];
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
 Ls = [10000 10000 10000 1000 1000 1000 1000 1000];
 %Numero de iteraciones del genetico
-Niter = 30000;
+Niter = 300000;
 
 limite = round(Niter / (2*Nf));
 
