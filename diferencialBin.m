@@ -2,7 +2,7 @@ clear all
 % Numero de individuos
 Nind = 40;
 % Numero de variables
-Nvar = 10;
+Nvar = 3;
 % Arreglo de tamaño Nvar con los limites inferiores correspondientes
 Li = ones(1, Nvar)* -10;
 % Arreglo de tamaño Nvar con los limites superiores correspondientes
