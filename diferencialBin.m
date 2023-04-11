@@ -17,7 +17,7 @@ Fm = 0.7;
 rng('shuffle');
 poblacion = crearPob(Li, Ls, Nind, Nvar)
 
-archivo = fopen("dif(1).txt", "w");
+% archivo = fopen("dif(1).txt", "w");
 
 for p = 1:Ngen
     p;
